@@ -15,7 +15,7 @@ options {
 	memstatistics-file "/var/named/data/named_mem_stats.txt";
 	secroots-file	"/var/named/data/named.secroots";
 	recursing-file	"/var/named/data/named.recursing";
-	allow-query     { 10.1.2.0/24; 192.168.2.0/24; };
+	allow-query     { any; };
 
 	/* 
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -29,7 +29,7 @@ options {
 	*/
 	recursion yes;
 
-	forwarders { 114.114.114.114; };
+	forwarders { 114.114.114.114; 8.8.8.8; };
 	dnssec-enable no;
 	dnssec-validation no;
 
@@ -54,14 +54,14 @@ zone "." IN {
 	file "named.ca";
 };
 
-zone "okd4.example.com" IN {
+zone "{{ cluster_name }}.{{ main_domain }}" IN {
 	type master;
-	file "/var/named/db.example.com";
+	file "/var/named/db.{{ main_domain }}";
 };
 
-zone "2.1.10.in-addr.arpa" IN {
+zone "1.1.10.in-addr.arpa" IN {
 	type master;
-	file "/var/named/db.example.com.reverse";
+	file "/var/named/db.{{ main_domain }}.reverse";
 };
 
 

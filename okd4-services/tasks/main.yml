@@ -6,15 +6,66 @@
     state: latest
   loop: "{{ pkg_names }}"
 
-- name: Install config files for services
+- name: Install haproxy config file
   template:
     src: haproxy.j2
     dest: "{{ haproxy_cfg_dir }}"
     force: yes
 
-  #- name: Ensure required service enabled and started
-  #  service:
-  #    name: "{{ item }}"
-  #    state: started
-  #    enabled: yes
-  #  loop: "{{ svc_names }}"
+- name: Install named config file
+  template:
+    src: named.j2
+    dest: "{{ named_cfg_dir }}"
+    force: yes
+
+- name: Install dns zone file
+  template:
+    src: db.example.com.j2
+    dest: /var/named/db.{{ main_domain }}
+    force: yes
+
+- name: Install reverse zone file
+  template:
+    src: db.example.com.reverse.j2
+    dest: /var/named/db.{{ main_domain }}.reverse
+    force: yes
+
+- name: Install dhcp config file
+  template:
+    src: dhcpd.j2
+    dest: "{{ dhcpd_cfg_dir }}"
+    force: yes
+
+- name: Change httpd port to 8080
+  lineinfile:
+   path: "{{ httpd_cfg_dir }}"
+   regexp: '^Listen'
+   line: Listen 8080
+
+
+- name: Disable selinux
+  selinux:
+    state: disabled
+
+- name: Ensure required service enabled and started
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  loop: "{{ svc_names }}"
+
+- name: Open firewall for services
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    immediate: yes
+    permanent: yes
+  loop: "{{ allowed_svc }}"
+
+- name: Open firewall for ports
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    immediate: yes
+    permanent: yes
+  loop: "{{ allowed_ports }}"

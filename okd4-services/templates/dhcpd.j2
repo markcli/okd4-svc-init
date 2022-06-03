@@ -1,0 +1,51 @@
+option domain-name "{{ cluster_name }}.{{ main_domain }}";
+option domain-name-servers 10.1.2.1;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+log-facility local7;
+
+subnet 10.1.2.0 netmask 255.255.255.0 {
+  range 10.1.2.200 10.1.2.222;
+  option domain-name-servers 10.1.2.1;
+  option domain-name "{{ cluster_name }}.{{ main_domain }}";
+  option routers 10.1.2.1;
+  default-lease-time 600;
+  max-lease-time 7200;
+}
+
+
+host bootstrap {
+  hardware ethernet 52:54:00:3c:bc:07;
+  fixed-address 10.1.2.10;
+  option host-name "bootstrap.{{ cluster_name }}.{{ main_domain }}";
+}
+
+host master0 {
+  hardware ethernet 52:54:00:e5:24:4b;
+  fixed-address 10.1.2.20;
+  option host-name "master0.{{ cluster_name }}.{{ main_domain }}";
+}
+
+host master1 {
+  hardware ethernet 52:54:00:04:8a:d7;
+  fixed-address 10.1.2.21;
+  option host-name "master1.{{ cluster_name }}.{{ main_domain }}";
+}
+
+host master2 {
+  hardware ethernet 52:54:00:49:74:7c;
+  fixed-address 10.1.2.22;
+  option host-name "master2.{{ cluster_name }}.{{ main_domain }}";
+}
+host worker0 {
+  hardware ethernet 52:54:00:8a:38:b6;
+  fixed-address 10.1.2.30;
+  option host-name "worker0.{{ cluster_name }}.{{ main_domain }}";
+}
+host worker1 {
+  hardware ethernet 52:54:00:c2:63:9d;
+  fixed-address 10.1.2.31;
+  option host-name "worker1.{{ cluster_name }}.{{ main_domain }}";
+}

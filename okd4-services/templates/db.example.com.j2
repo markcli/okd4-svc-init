@@ -1,0 +1,31 @@
+$TTL 1W
+@	IN	SOA	{{ cluster_name }}-services.{{ cluster_name }}.{{ main_domain }}.	root (
+			2019070700	; serial
+			3H		; refresh (3 hours)
+			30M		; retry (30 minutes)
+			2W		; expiry (2 weeks)
+			1W )		; minimum (1 week)
+	IN	NS	{{ cluster_name }}-services.{{ cluster_name }}.{{ main_domain }}.
+	IN	MX 10	smtp.{{ main_domain }}.
+;
+;
+{{ cluster_name }}-services.{{ cluster_name }}.{{ main_domain }}.		IN	A	10.1.2.1
+smtp.{{ main_domain }}.		IN	A	10.1.2.1
+;
+helper.{{ main_domain }}.		IN	A	10.1.2.1
+helper.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.1
+;
+api.{{ cluster_name }}.{{ main_domain }}.		IN	A	10.1.2.1 
+api-int.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.1 
+;
+*.apps.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.1 
+;
+bootstrap.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.10
+;
+master0.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.20
+master1.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.21 
+master2.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.22
+;
+worker0.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.30 
+worker1.{{ cluster_name }}.{{ main_domain }}.	IN	A	10.1.2.31
+;

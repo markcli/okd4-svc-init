@@ -1,0 +1,21 @@
+$TTL 1W
+@	IN	SOA	{{ cluster_name }}-services.{{ cluster_name }}.{{ main_domain }}.	root (
+			2019070700	; serial
+			3H		; refresh (3 hours)
+			30M		; retry (30 minutes)
+			2W		; expiry (2 weeks)
+			1W )		; minimum (1 week)
+	IN	NS	{{ cluster_name }}-services.{{ cluster_name }}.{{ main_domain }}.
+;
+1.2.1.10.in-addr.arpa.	IN	PTR	api.{{ cluster_name }}.{{ main_domain }}. 
+1.2.1.10.in-addr.arpa.	IN	PTR	api-int.{{ cluster_name }}.{{ main_domain }}. 
+;
+10.2.1.10.in-addr.arpa.	IN	PTR	bootstrap.{{ cluster_name }}.{{ main_domain }}. 
+;
+20.2.1.10.in-addr.arpa.	IN	PTR	master0.{{ cluster_name }}.{{ main_domain }}. 
+21.2.1.10.in-addr.arpa.	IN	PTR	master1.{{ cluster_name }}.{{ main_domain }}. 
+22.2.1.10.in-addr.arpa.	IN	PTR	master2.{{ cluster_name }}.{{ main_domain }}. 
+;
+30.2.1.10.in-addr.arpa.	IN	PTR	worker0.{{ cluster_name }}.{{ main_domain }}. 
+31.2.1.10.in-addr.arpa.	IN	PTR	worker1.{{ cluster_name }}.{{ main_domain }}. 
+;
