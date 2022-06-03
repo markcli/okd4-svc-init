@@ -1,0 +1,31 @@
+---
+# defaults file for okd4-services
+cluster_name: okd4
+main_domain: example.com
+pkg_names:
+  - haproxy
+  - bind
+  - bind-utils
+  - dhcp-server
+  - httpd
+
+svc_names:
+  - haproxy
+  - named
+  - dhcpd
+  - httpd
+  - firewalld
+
+allow_svc:
+  - dns
+  - dhcp
+  - http
+  - https
+
+allowed_ports:
+  - 6443
+  - 8080
+  - 1936
+  - 22623
+
+haproxy_cfg_dir: /etc/haproxy/haproxy.cfg

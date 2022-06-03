@@ -1,0 +1,20 @@
+---
+# tasks file for okd4-services
+- name: Ensure required packages installed
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ pkg_names }}"
+
+- name: Install config files for services
+  template:
+    src: haproxy.j2
+    dest: "{{ haproxy_cfg_dir }}"
+    force: yes
+
+  #- name: Ensure required service enabled and started
+  #  service:
+  #    name: "{{ item }}"
+  #    state: started
+  #    enabled: yes
+  #  loop: "{{ svc_names }}"
