@@ -3,6 +3,12 @@
 cluster_name: okd4
 main_domain: example.com
 
+interface_name: enp0s8
+
+interface_ipv4: 192.168.4.1/24
+
+okd4_subnet: 192.168.4.0/24
+
 pkg_names:
   - haproxy
   - bind
@@ -24,10 +30,10 @@ allowed_svc:
   - https
 
 allowed_ports:
-  - 6443
-  - 8080
-  - 1936
-  - 22623
+  - 6443/tcp
+  - 8080/tcp
+  - 1936/tcp
+  - 22623/tcp
 
 haproxy_cfg_dir: /etc/haproxy/haproxy.cfg
 named_cfg_dir: /etc/named.conf

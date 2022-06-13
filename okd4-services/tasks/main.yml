@@ -30,6 +30,15 @@
     dest: /var/named/db.{{ main_domain }}.reverse
     force: yes
 
+- name: Setup network interface
+  nmcli:
+    conn_name: "{{ interface_name }}"
+    ifname: "{{ interface_name }}"
+    type: ethernet
+    ip4: "{{ interface_ipv4 }}"
+    state: present
+    dns4: "{{ ansible_facts['enp0s8']['ipv4']['address'] }}"
+
 - name: Install dhcp config file
   template:
     src: dhcpd.j2
@@ -46,6 +55,12 @@
 - name: Disable selinux
   selinux:
     state: disabled
+
+- name: Install resolv.conf
+  template:
+    src: resolv.j2
+    dest: /etc/resolv.conf
+    force: yes
 
 - name: Ensure required service enabled and started
   service:
